@@ -47,18 +47,20 @@ void Game::run()
 
 void Game::initialise()
 {
-	//fileSpider = "cottage-texture.png";
-	//texture_dataS = stbi_load(fileSpider.c_str(), &widthS, &heightS, &comp_countS, 3);
+	fileSpider = "cottage-texture.png";
+	texture_dataS = stbi_load(fileSpider.c_str(), &widthS, &heightS, &comp_countS, 3);
 
-	//glGenTextures(1, &Texture);
-	//glBindTexture(GL_TEXTURE_2D, Texture);
-	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, widthS, heightS, 0, GL_RGB, GL_UNSIGNED_BYTE, texture_dataS);
+	glGenTextures(1, &Texture1);
+	glBindTexture(GL_TEXTURE_2D, Texture1);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, widthS, heightS, 0, GL_RGB, GL_UNSIGNED_BYTE, texture_dataS);
 
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
-	//bool res1 = m_modelLoaderSpider.loadOBJ("aranha.obj", verticesSpider, uvsSpider, normalsSpider);
-
+	m_modelLoaderSpider.loadOBJ("cottage.obj", verticesSpider, uvsSpider, normalsSpider);
+	/// <summary>
+	/// 
+	/// </summary>
 
 	filename = "cottage-texture.png";
 	stbi_set_flip_vertically_on_load(false);
@@ -71,7 +73,7 @@ void Game::initialise()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
-	bool res = m_modelLoader.loadOBJ("cottage.obj", vertices, uvs, normals);
+	m_modelLoader.loadOBJ("cottage.obj", vertices, uvs, normals);
 
 	GLuint m_error = glewInit(); // Initialise GLEW
 
@@ -98,8 +100,11 @@ void Game::initialise()
 	glBindBuffer(GL_ARRAY_BUFFER, normalbuffer);
 	glBufferData(GL_ARRAY_BUFFER, normals.size() * sizeof(glm::vec3), &normals[0], GL_STATIC_DRAW);
 
+
+
+
 	// Initialise buffers (vertices, UV and normals)
-	/*glGenBuffers(1, &vertexbuffer);
+	glGenBuffers(1, &vertexbuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
 	glBufferData(GL_ARRAY_BUFFER, verticesSpider.size() * sizeof(glm::vec3), &verticesSpider[0], GL_STATIC_DRAW);
 
@@ -109,7 +114,7 @@ void Game::initialise()
 
 	glGenBuffers(1, &normalbuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, normalbuffer);
-	glBufferData(GL_ARRAY_BUFFER, normalsSpider.size() * sizeof(glm::vec3), &normalsSpider[0], GL_STATIC_DRAW);*/
+	glBufferData(GL_ARRAY_BUFFER, normalsSpider.size() * sizeof(glm::vec3), &normalsSpider[0], GL_STATIC_DRAW);
 
 	// Projection matrix 
 	projection = glm::perspective(45.0f, 4.0f / 3.0f, 1.0f, 500.0f);
@@ -252,6 +257,7 @@ void Game::render()
 
 	// Draw
 	glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+	glDrawArrays(GL_TRIANGLES, 0, verticesSpider.size());
 
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
@@ -298,29 +304,31 @@ glm::mat4 Game::camera(glm::vec3 t_eye, double t_pitch, double t_yaw)
 // Game controls
 void Game::gameControls(sf::Time t_deltaTime)
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
+	//forward
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 	{
 		glm::vec3 tempDirection(m_direction.x, m_direction.y, m_direction.z);
 		glm::normalize(tempDirection);
 		m_eye -= tempDirection * static_cast<float>(t_deltaTime.asMilliseconds() * speed);
 	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+	//back
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 	{
 		glm::vec3 tempDirection(m_direction.x, m_direction.y, m_direction.z);
 		glm::normalize(tempDirection);
 		m_eye += tempDirection * static_cast<float>(t_deltaTime.asMilliseconds() * speed);
 	}
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+	//strafe
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 	{
 		m_eye.x -= .1f;
 	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 	{
 		m_eye.x += .1f;
 	}
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::N))
+	//look
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 	{
 		m_yaw += 2.0;
 		m_rotationMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(-2.0f), glm::vec3(0.f, 1.f, 0.f));
@@ -332,7 +340,7 @@ void Game::gameControls(sf::Time t_deltaTime)
 			m_direction = glm::vec4(0.f, 0.f, 1.f, 0.f);
 		}
 	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::M))
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 	{
 		m_yaw -= 2.0;
 		m_rotationMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(2.0f), glm::vec3(0.f, 1.f, 0.f));
@@ -345,7 +353,7 @@ void Game::gameControls(sf::Time t_deltaTime)
 		}
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 	{
 		m_pitch += 1.0;
 
@@ -355,7 +363,7 @@ void Game::gameControls(sf::Time t_deltaTime)
 		}
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 	{
 		m_pitch -= 1.0;
 

@@ -35,25 +35,25 @@ private:
 	GLuint Texture;
 	GLuint uvbuffer;
 
-	//GLuint TextureID1;
-	//GLuint Texture1;
-	//GLuint uvbuffer1;
+	GLuint TextureID1;
+	GLuint Texture1;
+	GLuint uvbuffer1;
 
 	//// Texture stuff
-	//std::string fileSpider;
-	//int widthS; //width of texture
-	//int heightS; //height of texture
-	//int comp_countS; //Component of texture
-	//const int numberS = 4; //4 = RGBA
-	//unsigned char *texture_dataS;
+	std::string fileSpider;
+	int widthS; //width of texture
+	int heightS; //height of texture
+	int comp_countS; //Component of texture
+	const int numberS = 4; //4 = RGBA
+	unsigned char *texture_dataS;
 
-	//tk::ModelLoader m_modelLoaderSpider;
+	tk::ModelLoader m_modelLoaderSpider;
 
 
 	//// These vectors are for loading in external OBJ files
-	//std::vector<glm::vec3> verticesSpider;
-	//std::vector<glm::vec2> uvsSpider;
-	//std::vector<glm::vec3> normalsSpider; // Won't be used at the moment.
+	std::vector<glm::vec3> verticesSpider;
+	std::vector<glm::vec2> uvsSpider;
+	std::vector<glm::vec3> normalsSpider; // Won't be used at the moment.
 
 
 	// OpenGL stuff
@@ -64,6 +64,8 @@ private:
 	GLuint LightID;
 	GLuint ViewMatrixID;
 	GLuint ModelMatrixID;
+
+
 
 	GLint positionID; // Vertex position ID (for shader)
 	GLint colorID; // Vertex color ID (for shader)
