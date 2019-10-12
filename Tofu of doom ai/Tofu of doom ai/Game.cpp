@@ -2,10 +2,14 @@
 
 static double const MS_PER_UPDATE = 10.0;
 Game::Game()
-	: m_window(sf::VideoMode(ScreenSize::s_width, ScreenSize::s_height, 32), "SFML Playground", sf::Style::Default)
+	: m_window(sf::VideoMode(ScreenSize::s_width, ScreenSize::s_height, 32), "Tofu of Doom", sf::Style::Default)
 	, m_enemy()
+	, m_enemyFollower()
+	, m_player()
 {
 	m_enemy.setUpContent();
+	m_enemyFollower.setUpContent();
+	m_player.setUpContent();
 }
 
 void Game::run()
@@ -48,7 +52,11 @@ void Game::processEvents()
 }
 void Game::update(double dt)
 {
+
+	m_playerRect = m_player.getPlayer();
 	m_enemy.update();
+	m_enemyFollower.update(m_playerRect);
+	
 }
 void Game::processGameEvents(sf::Event& event)
 {
@@ -70,4 +78,6 @@ void Game::render()
 {
 	m_window.clear(sf::Color(0, 0, 0, 0));
 	m_enemy.render(m_window);
+	m_enemyFollower.render(m_window);
+	m_player.render(m_window);
 }

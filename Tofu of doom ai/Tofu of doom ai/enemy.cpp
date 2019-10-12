@@ -11,7 +11,7 @@ void Enemy::update()
 
 void Enemy::setUpContent()
 {
-	enemy.setFillColor(sf::Color::Blue);
+	enemy.setFillColor(sf::Color::Red);
 	enemy.setSize(sf::Vector2f(100, 50));
 	enemy.setOutlineColor(sf::Color::Red);
 	enemy.setOutlineThickness(5);

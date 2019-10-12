@@ -5,7 +5,7 @@ class Enemy
 
 public:
 	Enemy();
-	sf::RectangleShape enemy;
+	sf::RectangleShape m_enemy;
 	
 	void update();
 	void setUpContent();
