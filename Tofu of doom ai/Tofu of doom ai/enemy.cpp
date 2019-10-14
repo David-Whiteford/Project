@@ -11,14 +11,19 @@ void Enemy::update()
 
 void Enemy::setUpContent()
 {
-	enemy.setFillColor(sf::Color::Red);
-	enemy.setSize(sf::Vector2f(100, 50));
-	enemy.setOutlineColor(sf::Color::Red);
-	enemy.setOutlineThickness(5);
-	enemy.setPosition(10, 20);
+	m_enemy.setFillColor(sf::Color::Red);
+	m_enemy.setSize(sf::Vector2f(100, 50));
+	m_enemy.setOutlineColor(sf::Color::Red);
+	m_enemy.setOutlineThickness(5);
+	m_enemy.setPosition(10, 20);
 }
 
 void Enemy::render(sf::RenderWindow & t_window)
 {
-	t_window.draw(enemy);
+	t_window.draw(m_enemy);
 }
+sf::RectangleShape Enemy::getFollower()
+{
+	return m_enemy;
+}
+

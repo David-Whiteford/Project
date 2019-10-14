@@ -12,9 +12,12 @@ public:
 	void update();
 	void setUpContent();
 	void render(sf::RenderWindow& t_window);
-	sf::RectangleShpe getPlayer();
+	sf::RectangleShape getPlayer();
+	void applyDamage();
+	void getHealth();
 
 
 private:
-
+	int m_health = 100;
+	int m_damage = 2;
 };

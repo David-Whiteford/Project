@@ -10,7 +10,7 @@ public:
 	void update();
 	void setUpContent();
 	void render(sf::RenderWindow &  t_window);
-	
+	sf::RectangleShape getFollower();
 
 
 private:

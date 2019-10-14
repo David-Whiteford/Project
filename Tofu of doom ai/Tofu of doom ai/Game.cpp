@@ -10,6 +10,14 @@ Game::Game()
 	m_enemy.setUpContent();
 	m_enemyFollower.setUpContent();
 	m_player.setUpContent();
+
+
+	m_testRect.setFillColor(sf::Color::Red);
+	m_testRect.setSize(sf::Vector2f(100, 50));
+	m_testRect.setOutlineColor(sf::Color::Red);
+	m_testRect.setOutlineThickness(5);
+	m_testRect.setPosition(10, 20);
+
 }
 
 void Game::run()
@@ -31,7 +39,6 @@ void Game::run()
 			lag -= MS_PER_UPDATE;
 		}
 		update(MS_PER_UPDATE);
-
 		render();
 	}
 }
@@ -52,10 +59,11 @@ void Game::processEvents()
 }
 void Game::update(double dt)
 {
-
+	std::cout
 	m_playerRect = m_player.getPlayer();
 	m_enemy.update();
 	m_enemyFollower.update(m_playerRect);
+	m_player.update();
 	
 }
 void Game::processGameEvents(sf::Event& event)
@@ -76,8 +84,21 @@ void Game::processGameEvents(sf::Event& event)
 
 void Game::render()
 {
-	m_window.clear(sf::Color(0, 0, 0, 0));
+	m_window.clear(sf::Color(255, 255, 255, 0));
+
+	m_window.draw(m_testRect);
 	m_enemy.render(m_window);
 	m_enemyFollower.render(m_window);
 	m_player.render(m_window);
+
+	m_window.display();
 }
+
+void Game::collisions()
+{
+	if (m_player.getPlayer().getGlobalBounds().intersects(m_enemy.getFollower().getGlobalBounds()))
+	{
+		m_player.applyDamage();
+	}
+}
+

@@ -17,7 +17,9 @@ public:
 	void update(double dt);
 	void processGameEvents(sf::Event& event);
 	void render();
+	void collisions();
 private:
 	sf::RenderWindow m_window;
 	sf::RectangleShape m_playerRect;
+	sf::RectangleShape m_testRect;
 };
