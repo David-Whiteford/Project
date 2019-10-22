@@ -12,15 +12,24 @@
 #include "Debug.h"
 #include "Shader.h"
 #include "ModelLoader.h"
-
+#include "enemy.h"
+#include "EnemyFollower.h"
+#include "ScreenSize.h"
 class Game
 {
 public:
 	Game(sf::ContextSettings t_settings);
 	~Game();
 	void run();
-
+	//2d sfml objects for the player a
+	//Enemy m_enemy;
+	//EnemyFollower m_enemyFollower;
+	//Player m_player;
 private:
+
+
+	//sf::RectangleShape m_playerRect;
+	//sf::RectangleShape m_testRect;
 	sf::RenderWindow m_window;
 	bool m_exitGame{ false };
 
